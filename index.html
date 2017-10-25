@@ -84,35 +84,6 @@ src="//pagead2.googlesyndication.com/pagead/show_ads.js">
 <!-- /#wrapper --> 
 <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script> 
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script> 
-<script>
-$(document).ready(function () {
-  var trigger = $('.hamburger'),
-      overlay = $('.overlay'),
-     isClosed = false;
-
-    trigger.click(function () {
-      hamburger_cross();      
-    });
-
-    function hamburger_cross() {
-
-      if (isClosed == true) {          
-        overlay.hide();
-        trigger.removeClass('is-open');
-        trigger.addClass('is-closed');
-        isClosed = false;
-      } else {   
-        overlay.show();
-        trigger.removeClass('is-closed');
-        trigger.addClass('is-open');
-        isClosed = true;
-      }
-  }
-  
-  $('[data-toggle="offcanvas"]').click(function () {
-        $('#wrapper').toggleClass('toggled');
-  });  
-});
-</script>
+<script src="hamburger.js"></script> 
 </body>
 </html>
