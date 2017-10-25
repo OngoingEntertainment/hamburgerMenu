@@ -1,0 +1,434 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Off-canvas Push Menu For Bootstrap 3</title>
+<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<style>
+/*-------------------------------*/
+/*           VARIABLES           */
+/*-------------------------------*/
+
+
+body {
+  position: relative;
+  overflow-x: hidden;
+}
+
+body, html {
+  height: 100%;
+  background-color: #583e7e;
+}
+
+.nav .open > a { background-color: transparent; }
+
+.nav .open > a:hover { background-color: transparent; }
+
+.nav .open > a:focus { background-color: transparent; }
+
+/*-------------------------------*/
+/*           Wrappers            */
+/*-------------------------------*/
+
+#wrapper {
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  -webkit-transition: all 0.5s ease;
+  padding-left: 0;
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+#wrapper.toggled { padding-left: 220px; }
+
+#wrapper.toggled #sidebar-wrapper { width: 220px; }
+
+#wrapper.toggled #page-content-wrapper {
+  margin-right: -220px;
+  position: absolute;
+}
+
+#sidebar-wrapper {
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  -webkit-transition: all 0.5s ease;
+  background: #1a1a1a;
+  height: 100%;
+  left: 220px;
+  margin-left: -220px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+  width: 0;
+  z-index: 1000;
+}
+#sidebar-wrapper::-webkit-scrollbar {
+ display: none;
+}
+
+#page-content-wrapper {
+  padding-top: 70px;
+  width: 100%;
+}
+
+/*-------------------------------*/
+/*     Sidebar nav styles        */
+/*-------------------------------*/
+
+.sidebar-nav {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  top: 0;
+  width: 220px;
+}
+
+.sidebar-nav li {
+  display: inline-block;
+  line-height: 20px;
+  position: relative;
+  width: 100%;
+}
+
+.sidebar-nav li:before {
+  -moz-transition: width 0.2s ease-in;
+  -ms-transition: width 0.2s ease-in;
+  -webkit-transition: width 0.2s ease-in;
+  background-color: #1c1c1c;
+  content: '';
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  -webkit-transition: width 0.2s ease-in;
+  transition: width 0.2s ease-in;
+  width: 3px;
+  z-index: -1;
+}
+
+.sidebar-nav li:first-child a {
+  background-color: #1a1a1a;
+  color: #ffffff;
+}
+
+.sidebar-nav li:nth-child(2):before { background-color: #52418a; }
+
+.sidebar-nav li:nth-child(3):before { background-color: #5c499c; }
+
+.sidebar-nav li:nth-child(4):before { background-color: #6651ad; }
+
+.sidebar-nav li:nth-child(5):before { background-color: #7562b5; }
+
+.sidebar-nav li:nth-child(6):before { background-color: #8473be; }
+
+.sidebar-nav li:nth-child(7):before { background-color: #9485c6; }
+
+.sidebar-nav li:nth-child(8):before { background-color: #a396ce; }
+
+.sidebar-nav li:nth-child(9):before { background-color: #b2a7d6; }
+
+.sidebar-nav li:hover:before {
+  -webkit-transition: width 0.2s ease-in;
+  transition: width 0.2s ease-in;
+  width: 100%;
+}
+
+.sidebar-nav li a {
+  color: #dddddd;
+  display: block;
+  padding: 10px 15px 10px 30px;
+  text-decoration: none;
+}
+
+.sidebar-nav li.open:hover before {
+  -webkit-transition: width 0.2s ease-in;
+  transition: width 0.2s ease-in;
+  width: 100%;
+}
+
+.sidebar-nav .dropdown-menu {
+  background-color: #222222;
+  border-radius: 0;
+  border: none;
+  box-shadow: none;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  width: 100%;
+}
+
+.sidebar-nav li a:hover, .sidebar-nav li a:active, .sidebar-nav li a:focus, .sidebar-nav li.open a:hover, .sidebar-nav li.open a:active, .sidebar-nav li.open a:focus {
+  background-color: transparent;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.sidebar-nav > .sidebar-brand {
+  font-size: 20px;
+  height: 65px;
+  line-height: 44px;
+}
+
+/*-------------------------------*/
+/*       Hamburger-Cross         */
+/*-------------------------------*/
+
+.hamburger {
+  background: transparent;
+  border: none;
+  display: block;
+  height: 32px;
+  margin-left: 15px;
+  position: fixed;
+  top: 20px;
+  width: 32px;
+  z-index: 999;
+}
+
+.hamburger:hover { outline: none; }
+
+.hamburger:focus { outline: none; }
+
+.hamburger:active { outline: none; }
+
+.hamburger.is-closed:before {
+  -webkit-transform: translate3d(0, 0, 0);
+  -webkit-transition: all 0.35s ease-in-out;
+  color: #ffffff;
+  content: '';
+  display: block;
+  font-size: 14px;
+  line-height: 32px;
+  opacity: 0;
+  text-align: center;
+  width: 100px;
+}
+
+.hamburger.is-closed:hover before {
+  -webkit-transform: translate3d(-100px, 0, 0);
+  -webkit-transition: all 0.35s ease-in-out;
+  display: block;
+  opacity: 1;
+}
+
+.hamburger.is-closed:hover .hamb-top {
+  -webkit-transition: all 0.35s ease-in-out;
+  top: 0;
+}
+
+.hamburger.is-closed:hover .hamb-bottom {
+  -webkit-transition: all 0.35s ease-in-out;
+  bottom: 0;
+}
+
+.hamburger.is-closed .hamb-top {
+  -webkit-transition: all 0.35s ease-in-out;
+  background-color: rgba(255, 255, 255, 0.7);
+  top: 5px;
+}
+
+.hamburger.is-closed .hamb-middle {
+  background-color: rgba(255, 255, 255, 0.7);
+  margin-top: -2px;
+  top: 50%;
+}
+
+.hamburger.is-closed .hamb-bottom {
+  -webkit-transition: all 0.35s ease-in-out;
+  background-color: rgba(255, 255, 255, 0.7);
+  bottom: 5px;
+}
+
+.hamburger.is-closed .hamb-top, .hamburger.is-closed .hamb-middle, .hamburger.is-closed .hamb-bottom, .hamburger.is-open .hamb-top, .hamburger.is-open .hamb-middle, .hamburger.is-open .hamb-bottom {
+  height: 4px;
+  left: 0;
+  position: absolute;
+  width: 100%;
+}
+
+.hamburger.is-open .hamb-top {
+  -webkit-transform: rotate(45deg);
+  -webkit-transition: -webkit-transform 0.2s cubic-bezier(0.73, 1, 0.28, 0.08);
+  background-color: #ffffff;
+  margin-top: -2px;
+  top: 50%;
+}
+
+.hamburger.is-open .hamb-middle {
+  background-color: #ffffff;
+  display: none;
+}
+
+.hamburger.is-open .hamb-bottom {
+  -webkit-transform: rotate(-45deg);
+  -webkit-transition: -webkit-transform 0.2s cubic-bezier(0.73, 1, 0.28, 0.08);
+  background-color: #ffffff;
+  margin-top: -2px;
+  top: 50%;
+}
+
+.hamburger.is-open:before {
+  -webkit-transform: translate3d(0, 0, 0);
+  -webkit-transition: all 0.35s ease-in-out;
+  color: #ffffff;
+  content: '';
+  display: block;
+  font-size: 14px;
+  line-height: 32px;
+  opacity: 0;
+  text-align: center;
+  width: 100px;
+}
+
+.hamburger.is-open:hover before {
+  -webkit-transform: translate3d(-100px, 0, 0);
+  -webkit-transition: all 0.35s ease-in-out;
+  display: block;
+  opacity: 1;
+}
+
+/*-------------------------------*/
+/*          Dark Overlay         */
+/*-------------------------------*/
+
+.overlay {
+  position: fixed;
+  display: none;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 1;
+}
+
+/* SOME DEMO STYLES - NOT REQUIRED */
+
+body, html { background-color: #583e7e; }
+
+body h1, body h2, body h3, body h4 { color: rgba(255, 255, 255, 0.9); }
+
+body p, body blockquote { color: rgba(255, 255, 255, 0.7); }
+
+body a {
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: underline;
+}
+
+body a:hover { color: #ffffff; }
+</style>
+</head>
+
+<body>
+<div id="wrapper">
+  <div class="overlay"></div>
+  
+  <!-- Sidebar -->
+  <nav class="navbar navbar-inverse navbar-fixed-top" id="sidebar-wrapper" role="navigation">
+    <ul class="nav sidebar-nav">
+      <li class="sidebar-brand"> <a href="#"> Bootstrap 3 </a> </li>
+      <li> <a href="#"><i class="fa fa-fw fa-home"></i> Home</a> </li>
+      <li> <a href="#"><i class="fa fa-fw fa-folder"></i> Page one</a> </li>
+      <li> <a href="#"><i class="fa fa-fw fa-file-o"></i> Second page</a> </li>
+      <li> <a href="#"><i class="fa fa-fw fa-cog"></i> Third page</a> </li>
+      <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-fw fa-plus"></i> Dropdown <span class="caret"></span></a>
+        <ul class="dropdown-menu" role="menu">
+          <li class="dropdown-header">Dropdown heading</li>
+          <li><a href="#">Action</a></li>
+          <li><a href="#">Another action</a></li>
+          <li><a href="#">Something else here</a></li>
+          <li><a href="#">Separated link</a></li>
+          <li><a href="#">One more separated link</a></li>
+        </ul>
+      </li>
+      <li> <a href="#"><i class="fa fa-fw fa-bank"></i> Page four</a> </li>
+      <li> <a href="#"><i class="fa fa-fw fa-dropbox"></i> Page 5</a> </li>
+      <li> <a href="#"><i class="fa fa-fw fa-twitter"></i> Last page</a> </li>
+    </ul>
+  </nav>
+  <!-- /#sidebar-wrapper --> 
+  
+  <!-- Page Content -->
+  <div id="page-content-wrapper">
+    <button type="button" class="hamburger is-closed animated fadeInLeft" data-toggle="offcanvas"> <span class="hamb-top"></span> <span class="hamb-middle"></span> <span class="hamb-bottom"></span> </button>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2">
+          <h1 class="page-header">Off-canvas Push Menu For Bootstrap 3</h1>
+          <div class="jquery-script-ads" style="margin:30px auto;"><script type="text/javascript"><!--
+google_ad_client = "ca-pub-2783044520727903";
+/* jQuery_demo */
+google_ad_slot = "2780937993";
+google_ad_width = 728;
+google_ad_height = 90;
+//-->
+</script>
+<script type="text/javascript"
+src="//pagead2.googlesyndication.com/pagead/show_ads.js">
+</script></div>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque lobortis sem ut varius commodo. Nunc ultricies diam vel elit hendrerit, at mollis est elementum. Donec tempor fringilla blandit. Duis porta volutpat hendrerit. Duis sed lorem id lacus ornare sollicitudin. Mauris dictum libero et lobortis blandit. In condimentum sollicitudin risus eu porttitor. Etiam lobortis est a porta commodo. Donec euismod sit amet nulla sit amet varius. Nam vitae pellentesque ligula, in iaculis felis. Sed et imperdiet orci. Integer facilisis ornare magna, non posuere mi sagittis eget. Mauris neque metus, laoreet nec feugiat sed, placerat ac libero.</p>
+          <p>Nam sed nisi gravida, pellentesque nisi at, porta magna. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Fusce eu tellus commodo, aliquam lacus sit amet, lacinia metus. Vivamus ornare magna at dapibus malesuada. Morbi non pulvinar dui. Curabitur cursus tempor hendrerit. Phasellus semper id massa id auctor. Mauris a porta mi, id volutpat nulla. Praesent condimentum nisl at lorem rhoncus sagittis. Aenean nec accumsan velit. Nullam ullamcorper enim ac sem egestas feugiat. Nullam est neque, semper eget fermentum sit amet, venenatis ut magna.</p>
+          <p>Suspendisse potenti. Nullam condimentum tellus vitae porttitor blandit. Proin eget convallis purus. Fusce sagittis neque vel lacinia feugiat. Suspendisse blandit lectus sed massa pharetra eleifend. Morbi vehicula mi sed ligula vulputate placerat. Nullam luctus eros nisl, et rhoncus metus elementum quis. Fusce at justo nec diam aliquet dapibus. Morbi quis tellus sit amet massa eleifend tincidunt. Maecenas vitae nisi ornare, mollis est ac, tristique odio.</p>
+          <p>Praesent at erat varius lacus aliquet pharetra quis non nisi. Cras scelerisque suscipit imperdiet. Nam volutpat nibh nisl, id sollicitudin nulla volutpat vitae. Phasellus finibus, lacus at pulvinar placerat, diam metus volutpat felis, vitae tempor nibh elit id magna. Nulla quis sem vel sapien aliquet iaculis in eget ex. Duis eu dui vestibulum, aliquam arcu ac, facilisis dolor. Donec mollis ut justo id efficitur. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Etiam in magna non neque tempor posuere id eget lorem. Vivamus et magna maximus quam rutrum vestibulum ut at justo. Vestibulum blandit eros libero, sit amet tempus metus sagittis eget. Praesent ac nisi ac velit varius porttitor eu non ex. Donec tristique eu elit nec egestas.</p>
+          <p>Quisque pellentesque at sem quis elementum. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Pellentesque vitae massa dolor. Integer ultricies nunc id risus suscipit rhoncus. In hac habitasse platea dictumst. Pellentesque lacinia libero sed vulputate feugiat. Quisque fermentum leo in purus pulvinar pulvinar. Vivamus condimentum felis in risus ultricies, euismod dictum ante lobortis. Vestibulum nulla dolor, maximus sed diam sed, commodo lobortis velit. Vestibulum facilisis elit ullamcorper commodo vehicula. Nam eu felis ut justo mattis tristique. Nullam nec tempor eros, non ullamcorper dui. Etiam suscipit nunc et suscipit blandit. Proin consequat metus a ultrices pharetra. Morbi et tincidunt massa.</p>
+          <h3>Section Two.</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque lobortis sem ut varius commodo. Nunc ultricies diam vel elit hendrerit, at mollis est elementum. Donec tempor fringilla blandit. Duis porta volutpat hendrerit. Duis sed lorem id lacus ornare sollicitudin. Mauris dictum libero et lobortis blandit. In condimentum sollicitudin risus eu porttitor. Etiam lobortis est a porta commodo. Donec euismod sit amet nulla sit amet varius. Nam vitae pellentesque ligula, in iaculis felis. Sed et imperdiet orci. Integer facilisis ornare magna, non posuere mi sagittis eget. Mauris neque metus, laoreet nec feugiat sed, placerat ac libero.</p>
+          <p>Nam sed nisi gravida, pellentesque nisi at, porta magna. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Fusce eu tellus commodo, aliquam lacus sit amet, lacinia metus. Vivamus ornare magna at dapibus malesuada. Morbi non pulvinar dui. Curabitur cursus tempor hendrerit. Phasellus semper id massa id auctor. Mauris a porta mi, id volutpat nulla. Praesent condimentum nisl at lorem rhoncus sagittis. Aenean nec accumsan velit. Nullam ullamcorper enim ac sem egestas feugiat. Nullam est neque, semper eget fermentum sit amet, venenatis ut magna.</p>
+          <p>Suspendisse potenti. Nullam condimentum tellus vitae porttitor blandit. Proin eget convallis purus. Fusce sagittis neque vel lacinia feugiat. Suspendisse blandit lectus sed massa pharetra eleifend. Morbi vehicula mi sed ligula vulputate placerat. Nullam luctus eros nisl, et rhoncus metus elementum quis. Fusce at justo nec diam aliquet dapibus. Morbi quis tellus sit amet massa eleifend tincidunt. Maecenas vitae nisi ornare, mollis est ac, tristique odio.</p>
+          <p>Praesent at erat varius lacus aliquet pharetra quis non nisi. Cras scelerisque suscipit imperdiet. Nam volutpat nibh nisl, id sollicitudin nulla volutpat vitae. Phasellus finibus, lacus at pulvinar placerat, diam metus volutpat felis, vitae tempor nibh elit id magna. Nulla quis sem vel sapien aliquet iaculis in eget ex. Duis eu dui vestibulum, aliquam arcu ac, facilisis dolor. Donec mollis ut justo id efficitur. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Etiam in magna non neque tempor posuere id eget lorem. Vivamus et magna maximus quam rutrum vestibulum ut at justo. Vestibulum blandit eros libero, sit amet tempus metus sagittis eget. Praesent ac nisi ac velit varius porttitor eu non ex. Donec tristique eu elit nec egestas.</p>
+          <p>Quisque pellentesque at sem quis elementum. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Pellentesque vitae massa dolor. Integer ultricies nunc id risus suscipit rhoncus. In hac habitasse platea dictumst. Pellentesque lacinia libero sed vulputate feugiat. Quisque fermentum leo in purus pulvinar pulvinar. Vivamus condimentum felis in risus ultricies, euismod dictum ante lobortis. Vestibulum nulla dolor, maximus sed diam sed, commodo lobortis velit. Vestibulum facilisis elit ullamcorper commodo vehicula. Nam eu felis ut justo mattis tristique. Nullam nec tempor eros, non ullamcorper dui. Etiam suscipit nunc et suscipit blandit. Proin consequat metus a ultrices pharetra. Morbi et tincidunt massa.</p>
+          <h3>Section Three.</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque lobortis sem ut varius commodo. Nunc ultricies diam vel elit hendrerit, at mollis est elementum. Donec tempor fringilla blandit. Duis porta volutpat hendrerit. Duis sed lorem id lacus ornare sollicitudin. Mauris dictum libero et lobortis blandit. In condimentum sollicitudin risus eu porttitor. Etiam lobortis est a porta commodo. Donec euismod sit amet nulla sit amet varius. Nam vitae pellentesque ligula, in iaculis felis. Sed et imperdiet orci. Integer facilisis ornare magna, non posuere mi sagittis eget. Mauris neque metus, laoreet nec feugiat sed, placerat ac libero.</p>
+          <p>Nam sed nisi gravida, pellentesque nisi at, porta magna. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Fusce eu tellus commodo, aliquam lacus sit amet, lacinia metus. Vivamus ornare magna at dapibus malesuada. Morbi non pulvinar dui. Curabitur cursus tempor hendrerit. Phasellus semper id massa id auctor. Mauris a porta mi, id volutpat nulla. Praesent condimentum nisl at lorem rhoncus sagittis. Aenean nec accumsan velit. Nullam ullamcorper enim ac sem egestas feugiat. Nullam est neque, semper eget fermentum sit amet, venenatis ut magna.</p>
+          <p>Suspendisse potenti. Nullam condimentum tellus vitae porttitor blandit. Proin eget convallis purus. Fusce sagittis neque vel lacinia feugiat. Suspendisse blandit lectus sed massa pharetra eleifend. Morbi vehicula mi sed ligula vulputate placerat. Nullam luctus eros nisl, et rhoncus metus elementum quis. Fusce at justo nec diam aliquet dapibus. Morbi quis tellus sit amet massa eleifend tincidunt. Maecenas vitae nisi ornare, mollis est ac, tristique odio.</p>
+          <p>Praesent at erat varius lacus aliquet pharetra quis non nisi. Cras scelerisque suscipit imperdiet. Nam volutpat nibh nisl, id sollicitudin nulla volutpat vitae. Phasellus finibus, lacus at pulvinar placerat, diam metus volutpat felis, vitae tempor nibh elit id magna. Nulla quis sem vel sapien aliquet iaculis in eget ex. Duis eu dui vestibulum, aliquam arcu ac, facilisis dolor. Donec mollis ut justo id efficitur. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Etiam in magna non neque tempor posuere id eget lorem. Vivamus et magna maximus quam rutrum vestibulum ut at justo. Vestibulum blandit eros libero, sit amet tempus metus sagittis eget. Praesent ac nisi ac velit varius porttitor eu non ex. Donec tristique eu elit nec egestas.</p>
+          <p>Quisque pellentesque at sem quis elementum. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Pellentesque vitae massa dolor. Integer ultricies nunc id risus suscipit rhoncus. In hac habitasse platea dictumst. Pellentesque lacinia libero sed vulputate feugiat. Quisque fermentum leo in purus pulvinar pulvinar. Vivamus condimentum felis in risus ultricies, euismod dictum ante lobortis. Vestibulum nulla dolor, maximus sed diam sed, commodo lobortis velit. Vestibulum facilisis elit ullamcorper commodo vehicula. Nam eu felis ut justo mattis tristique. Nullam nec tempor eros, non ullamcorper dui. Etiam suscipit nunc et suscipit blandit. Proin consequat metus a ultrices pharetra. Morbi et tincidunt massa.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /#page-content-wrapper --> 
+  
+</div>
+<!-- /#wrapper --> 
+<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script> 
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script> 
+<script>
+$(document).ready(function () {
+  var trigger = $('.hamburger'),
+      overlay = $('.overlay'),
+     isClosed = false;
+
+    trigger.click(function () {
+      hamburger_cross();      
+    });
+
+    function hamburger_cross() {
+
+      if (isClosed == true) {          
+        overlay.hide();
+        trigger.removeClass('is-open');
+        trigger.addClass('is-closed');
+        isClosed = false;
+      } else {   
+        overlay.show();
+        trigger.removeClass('is-closed');
+        trigger.addClass('is-open');
+        isClosed = true;
+      }
+  }
+  
+  $('[data-toggle="offcanvas"]').click(function () {
+        $('#wrapper').toggleClass('toggled');
+  });  
+});
+</script>
+</body>
+</html>
